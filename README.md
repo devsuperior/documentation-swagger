@@ -1,7 +1,7 @@
 # Documentação de API com Swagger no Spring Boot com Java
 >  *Criar uma documentação para o projeto Dsmovie utilizando o Swagger*
 
-## Aula 1
+## Aula 1 - Introduçao ao swagger
 
 ### Passso: incluir novos endpoints
 
@@ -135,5 +135,116 @@ spring.mvc.pathmatch.matching-strategy=ant-path-matcher
 
 - Link: http://localhost:8080/swagger-ui.html
 
+
+## Aula 2 - Personalizaçao do swagger
+
+### Passso: Bean validation
+
+- Ajuste no arquivo pom.xml:
+
+```xml
+<dependency>
+    <groupId>javax.validation</groupId>
+    <artifactId>validation-api</artifactId>
+</dependency>
+
+<dependency>
+    <groupId>org.hibernate.validator</groupId>
+    <artifactId>hibernate-validator</artifactId>
+</dependency>
+```
+
+- Validações básicas
+
+```java
+public class MovieDTO {
+
+	@NotEmpty(message = "can't be empty")
+	@Length(min = 3, max = 50, message = "Length must be between 5 and 80")
+	or
+	@NotBlank
+  private String title;
+	
+	@PositiveOrZero
+	private Double score;
+
+	...
+```
+
+```java
+public class ScoreDTO {
+
+	@Email
+	private String email;
+	
+	...
+
+```
+
+```java
+public class MovieController {
+
+	@PostMapping
+	public ResponseEntity<MovieDTO> insert(@Valid @RequestBody MovieDTO dto)
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<MovieDTO> update(@PathVariable Long id, @Valid @RequestBody MovieDTO dto)
+	
+	...
+```
+
+```java
+public class MovieController {
+
+	@PutMapping
+	public MovieDTO saveScore(@Valid @RequestBody ScoreDTO dto)
+	
+	...
+```
+### Passso: Personalização swagger
+
+- Anotações nos endpoints REST:
+
+```java
+
+	@PostMapping
+	@ApiOperation(value = "Add a movie")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "Product was created successfully"),
+		@ApiResponse(code = 400, message = "Bad Request")
+	})
+	public ResponseEntity<MovieDTO> insert(@RequestBody MovieDTO dto) {
+```
+
+- Anotações model
+
+```java
+public class MovieDTO {
+
+	@ApiModelProperty(notes = "Database generated movie ID")
+	private Long id;
+	
+	@ApiModelProperty(notes = "Movie title")
+	private String title;
+```
+
+- Incluindo metadados swagger
+
+```java
+@Bean
+public Docket api() {
+	return new Docket(DocumentationType.SWAGGER_2).select()
+		.apis(RequestHandlerSelectors.withClassAnnotation(RestController.class)).paths(PathSelectors.any())
+		.build()
+		.apiInfo(metaData());
+}
+
+private ApiInfo metaData() {
+	return new ApiInfoBuilder().title("Dsmovie API")
+		.description("\"Spring Boot REST API for SDS 8\"").version("1.0.0")
+		.contact(new Contact("Devsuperior", "https://github.com/devsuperior", "https://www.instagram.com/devsuperior.ig/"))
+		.build();
+}
+```
 
 
