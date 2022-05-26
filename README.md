@@ -207,6 +207,12 @@ private ApiInfo metaData() {
     <groupId>org.hibernate.validator</groupId>
     <artifactId>hibernate-validator</artifactId>
 </dependency>
+
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-bean-validators</artifactId>
+    <version>2.9.2</version>
+</dependency>
 ```
 
 - Validações básicas
@@ -215,10 +221,12 @@ private ApiInfo metaData() {
 public class MovieDTO {
 
 	@NotEmpty(message = "can't be empty")
-	@Length(min = 3, max = 50, message = "Length must be between 5 and 80")
+	@Size(min = 3, max = 50, message = "Length must be between 3 and 50")
 	private String title;
 	
 	@PositiveOrZero
+	@Min(value = 0, message = "Score should not be less than 0")
+    	@Max(value = 5, message = "Score should not be greater than 5")
 	private Double score;
 
 	...
@@ -227,6 +235,7 @@ public class MovieDTO {
 ```java
 public class ScoreDTO {
 	
+	@NotBlank
 	@Email
 	private String email;
 	
@@ -254,5 +263,18 @@ public class MovieController {
 	
 	...
 ```
+
+- Importar BeanValidatorPluginsConfiguration no SwaggerConfig
+
+```java
+@Configuration
+@EnableSwagger2
+@Import(BeanValidatorPluginsConfiguration.class)
+public class SwaggerConfig {
+	//...
+}
+```
+
+* Importante: Caso você tenha algum erro neste passo, sugiro que você altere o seu arquivo pom.xml e modifique a versão da dependência springfox-swagger2 para 2.9.2
 
 
