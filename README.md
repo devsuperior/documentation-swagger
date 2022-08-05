@@ -5,7 +5,6 @@
 
 ### Passso: incluir novos endpoints
 
-
 ```java
 @Service
 public class MovieService {
@@ -256,7 +255,7 @@ public class MovieController {
 ```
 
 ```java
-public class MovieController {
+public class ScoreController {
 
 	@PutMapping
 	public MovieDTO saveScore(@Valid @RequestBody ScoreDTO dto)
