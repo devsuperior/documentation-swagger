@@ -410,6 +410,25 @@ public class User implements UserDetails {
 }
 ``` 
 
+```java
+@Service
+public class UserService implements UserDetailsService {
+
+	@Autowired
+	private UserRepository repository;
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		
+		User user = repository.findByEmail(username);
+		if (user == null) {
+			throw new UsernameNotFoundException("Email not found");
+		}
+		return user;
+	}
+}
+``` 
+
 - Incluir infraestrutura de segurança ao projeto
 
 - Neste passo, caso você tenha qualquer dúvida, sugiro revisitar no cap. 3 - Validação e Segurança (aula 03-31 Reaproveitando a infraestrutura do DSCatalog), para realizar os seguintes passos:
