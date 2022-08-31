@@ -465,6 +465,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 ```java
 @Configuration
 @EnableSwagger2
+@Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerConfig {
 	
 	public static final String AUTHORIZATION_HEADER="Authorization";
@@ -490,8 +491,16 @@ public class SwaggerConfig {
         		.select()
         		.apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
         		.paths(PathSelectors.any())
-        		.build();
+        		.build()
+			.apiInfo(metaData());
     }
+    
+    private ApiInfo metaData() {
+		return new ApiInfoBuilder().title("Dsmovie API")
+			.description("\"Spring Boot REST API for SDS 8\"").version("1.0.0")
+			.contact(new Contact("Devsuperior", "https://github.com/devsuperior", "https://www.instagram.com/devsuperior.ig/"))
+			.build();
+	}
 }
 ```
 
