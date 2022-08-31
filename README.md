@@ -417,7 +417,7 @@ public class User implements UserDetails {
 	- Ajustar o **application.properties**;
 	- Ajustar script **import.sql** (*disponível no link abaixo*)
 	
-		https://gist.github.com/oliveiralex/03720209ca79ed318d33bf6f15264d3cv
+		https://gist.github.com/oliveiralex/03720209ca79ed318d33bf6f15264d3c
 	
 - Testar o projeto
 
