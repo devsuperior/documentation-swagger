@@ -285,6 +285,17 @@ public class SwaggerConfig {
 
 	https://gist.github.com/oliveiralex/a65d21b92ce6dd73077ec1c5910361f0
 
+- Renomear nome da coluna value para score_value na entidade Score
+
+```java
+public class Score {
+	...
+	
+	@Column(name = "score_value")
+	private Double value;
+}
+```
+
 - Modelo de dados User-Role:
 
 ```java
