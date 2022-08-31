@@ -415,7 +415,9 @@ public class User implements UserDetails {
 - Neste passo, caso você tenha qualquer dúvida, sugiro revisitar no cap. 3 - Validação e Segurança (aula 03-31 Reaproveitando a infraestrutura do DSCatalog), para realizar os seguintes passos:
 	- Incluir classes **AuthorizationServerConfig**, **ResourceServerConfig** e **WebSecurityConfig**;
 	- Ajustar o **application.properties**;
-	- Ajustar script **import.sql**;
+	- Ajustar script **import.sql** (*disponível no link abaixo*)
+	
+		https://gist.github.com/oliveiralex/03720209ca79ed318d33bf6f15264d3cv
 	
 - Testar o projeto
 
