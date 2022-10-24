@@ -1,5 +1,6 @@
 package com.devsuperior.dsmovie.entities;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -11,6 +12,7 @@ public class Score {
 	@EmbeddedId
 	private ScorePK id = new ScorePK();
 	
+	@Column(name = "score_value")
 	private Double value;
 	
 	public Score() {
